@@ -22,6 +22,7 @@ export const usuarioSchema: Schema = new Schema ({
     status: { type: String, default: 'inactivo', required: true },
     fcreate: { type: String, default: fechaActual() },
     img: { type: String, required: false }
+
 }, { collection: 'usuarios'} );
 
 usuarioSchema.plugin(uniqueValidator, { message: '{PATH} debe de ser unico' });
