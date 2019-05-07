@@ -7,18 +7,20 @@ export interface CUotasModel extends CUotas, Document{
 }
 
 export var cuotasSchema: Schema = new Schema({
-    mantenimiento: { type: String, required: false },
-    extraordinaria: { type: String, required: false },
-    area_comun: { type: String, required: false },
-    descuento: { type: String, required: false },
-    servicio_gas: { type: String, required: false },
-    servicio_agua: {type: String, required: false },
-    otros_servicios: { type: String, required: false },
-    int_moratorios: { types: String, required: false },
-    multas: { types: String, required: false },
-    otros_cargos: { types: String, required: false }
+    mantenimiento: { type: Number, required: false },
+    extraordinaria: { type: Number, required: false },
+    area_comun: { type: Number, required: false },
+    descuento: { type: Number, required: false },
+    servicio_gas: { type: Number, required: false },
+    servicio_agua: { type: Number, required: false },
+    otros_servicios: { type: Number, required: false },
+    multas: { type: Number, required: false },
+    otros_cargos: { type: Number, required: false },
+    int_moratorios: { type: Number, required: false },
+    monto_total: { type: Number, required: false },
+    fch_lim_pag: { type: Date, required: false }
 
-});
+}, {collection: 'cuotas' });
 
 
 export const Cuotas: Model<CUotasModel> = model <CUotasModel> ( "Cuotas", cuotasSchema);

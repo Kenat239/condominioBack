@@ -19,12 +19,14 @@ server.app.use( cors( { origin: true, credentials: true }) );
 import usuarioRoutes from './rutas/usuario';
 import loginRoutes from './rutas/login';
 import uploadRoutes from './rutas/uploads';
+import cuotasRoutes from './rutas/cuotas';
 
 // Rutas de servicios
 
 server.app.use('/login', loginRoutes);
 server.app.use('/usuario', usuarioRoutes);
 server.app.use('/uploads', uploadRoutes);
+server.app.use('/cuotas', cuotasRoutes);
 
 // Conexion a base de datos
 mongoose.connect(`mongodb://${ DB_URL }`, {useCreateIndex: true, useNewUrlParser: true}, (err) => {
