@@ -19,7 +19,7 @@ export const usuarioSchema: Schema = new Schema ({
     email: { type: String, unique: true,required: [true, 'El email es requerido'], lowercase: true },
     password: { type: String, required: [true, 'El password es requerido'] },
     role: { type: String, enum: rolesValidos, default: 'USER_ROLE' },
-    status: { type: String, default: 'inactivo', required: true },
+    status: { type: String, default: 'activo', required: true },
     fcreate: { type: String, default: fechaActual() },
     img: { type: String, required: false }
 
