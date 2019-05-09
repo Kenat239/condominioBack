@@ -28,7 +28,7 @@ export function fechaActual() {
 
     let fecha = addZero(dia) + '/' + addZero(mes) + '/' + anio;
 
-    return fecha;
+    return fecha;  
 }
 
 export function guardarLog(tipo: string, url: string, usuario: any, email: any, ip: any, descripcion: string) {

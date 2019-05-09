@@ -20,6 +20,7 @@ cuotasRoutes.post('/', function (req, res) {
         Number(body.int_moratorios);
     var menos_desc = Number(suma_cuot) -
         Number(body.descuento);
+    var fechaUnix = parseInt((new Date(globales_1.fechaActual()).getTime() / 1000).toFixed(0));
     var cuota = new cuotas_1.Cuotas({
         mantenimiento: body.mantenimiento,
         extraordinaria: body.extraordinaria,
@@ -33,8 +34,9 @@ cuotasRoutes.post('/', function (req, res) {
         multas: body.multas,
         monto_total: suma_cuot,
         monto_con_desc: menos_desc,
-        fecha_lim_pag: globales_1.fechaActual()
+        fecha_lim_pag: fechaUnix
     });
+    console.log('fecha_lim_pag', fechaUnix);
     cuota.save(function (err, cuotaGuardada) {
         if (err) {
             return res.status(500).json({
