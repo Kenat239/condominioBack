@@ -1,9 +1,9 @@
 import { Request, Response, Router } from 'express';
-import { Usuario } from '../modelos/usuario';
+import { Residente } from '../modelos/residentes';
 import { SEED } from '../global/environment';
 import jwd from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { guardarLog } from '../funciones/globales';
+
 
 const loginRoutes = Router();
 
@@ -14,50 +14,39 @@ const loginRoutes = Router();
 loginRoutes.post('/', (req: Request, res: Response) => {
     const body = req.body;
 
-    Usuario.findOne({ email: body.email }, (err:any, usuarioDB) => {
-        if ( err ) {
-            guardarLog(req.method, req.originalUrl, 'Sin ID', body.email, req.ip, 'Error en base de datos al loguear usuario');
+    Residente.findOne({ email: body.email }, (err:any, residenteDB) => {
+        if (err){
             return res.status(500).json({
-                ok: false,
-                mensaje: 'Error en la base de datos al intentar loguearse',
+                ok:false,
+                mensaje:'error en la base de datos',
                 err: err
-            });
-        }
 
-        if ( !usuarioDB ) {
-            guardarLog(req.method, req.originalUrl, 'Sin ID', body.email, req.ip, 'Error en email');
+           });
+           
+        }
+        if(!residenteDB){
             return res.status(404).json({
                 ok: false,
-                mensaje: 'Usuario o contraseña invalidos'
+                mensaje: 'el usuario no existe'
             });
         }
 
-        if ( usuarioDB.status !== 'activo' ) {
-            return res.status(401).json({
+        if( !bcrypt.compareSync(body.password, residenteDB.password) ) {
+            return res.status(400).json({
                 ok: false,
-                mensaje: 'Usuario desactivado'
-            });
+                mensaje: 'credenciales incorrectas',
+            });  
         }
 
-        if( !bcrypt.compareSync(body.password, usuarioDB.password) ) {
-            guardarLog(req.method, req.originalUrl, 'Sin ID', body.email, req.ip, 'Error en contraseña');
-            return res.status(401).json({
-                ok: false,
-                mensaje: 'Usuario o contraseña invalidos'
-            });
-        }
-
-        const token = jwd.sign( { usuario: usuarioDB }, SEED, { expiresIn: 14400 });
+        const token = jwd.sign( { usuario: residenteDB }, SEED, { expiresIn: 14400 });
         
-        usuarioDB.password = 'XD';
+       
 
-        guardarLog(req.method, req.originalUrl, usuarioDB._id, usuarioDB.email, req.ip, 'Logueo de usuario exitoso');
-
+        
         res.status(200).json({
             ok: true,
-            id: usuarioDB._id,
             token: token,
-            usuario: usuarioDB
+            usuario: residenteDB
         });
     });
 });

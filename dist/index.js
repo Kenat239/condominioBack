@@ -19,10 +19,14 @@ server.app.use(cors_1.default({ origin: true, credentials: true }));
 var usuario_1 = __importDefault(require("./rutas/usuario"));
 var login_1 = __importDefault(require("./rutas/login"));
 var uploads_1 = __importDefault(require("./rutas/uploads"));
+var residentes_1 = __importDefault(require("./rutas/residentes"));
+var administradores_1 = __importDefault(require("./rutas/administradores"));
 // Rutas de servicios
 server.app.use('/login', login_1.default);
 server.app.use('/usuario', usuario_1.default);
 server.app.use('/uploads', uploads_1.default);
+server.app.use('/residentes', residentes_1.default);
+server.app.use('/admins', administradores_1.default);
 // Conexion a base de datos
 mongoose_1.default.connect("mongodb://" + environment_1.DB_URL, { useCreateIndex: true, useNewUrlParser: true }, function (err) {
     if (err)
