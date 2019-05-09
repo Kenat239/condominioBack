@@ -13,4 +13,5 @@ export interface CUotas{
     int_moratorios: number,
     fecha_lim_pag: Date
     
+    
 }

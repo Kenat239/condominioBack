@@ -1,11 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var cuotas_1 = require("../modelos/cuotas");
-var moment_1 = __importDefault(require("moment"));
+var globales_1 = require("../funciones/globales");
 var cuotasRoutes = express_1.Router();
 //=======================================
 //Crear Cuotas
@@ -23,8 +20,6 @@ cuotasRoutes.post('/', function (req, res) {
         Number(body.int_moratorios);
     var menos_desc = Number(suma_cuot) -
         Number(body.descuento);
-    var format_fecha = moment_1.default().format("DD-MMM-YYYY");
-    console.log('Fecha con moment ' + format_fecha);
     var cuota = new cuotas_1.Cuotas({
         mantenimiento: body.mantenimiento,
         extraordinaria: body.extraordinaria,
@@ -38,9 +33,8 @@ cuotasRoutes.post('/', function (req, res) {
         multas: body.multas,
         monto_total: suma_cuot,
         monto_con_desc: menos_desc,
-        fecha_lim_pag: body.fecha_lim_pag
+        fecha_lim_pag: globales_1.fechaActual()
     });
-    console.log('Fecha limite de pago ', body.fecha_lim_pag);
     cuota.save(function (err, cuotaGuardada) {
         if (err) {
             return res.status(500).json({

@@ -1,7 +1,7 @@
 import { Router, Request, Response, response } from 'express';
 import { Cuotas } from '../modelos/cuotas';
 import { CUotas } from '../interfaces/cuotas';
-import moment from 'moment';
+import { fechaActual } from '../funciones/globales';
 
 const cuotasRoutes = Router();
 
@@ -26,11 +26,6 @@ cuotasRoutes.post('/', (req: Request, res: Response) => {
         Number( suma_cuot ) - 
         Number( body.descuento );
         
-        const format_fecha = moment().format("DD-MMM-YYYY")
-
-        console.log('Fecha con moment ' + format_fecha)
-
-
     const cuota = new Cuotas({
 
         mantenimiento: body.mantenimiento,
@@ -45,10 +40,9 @@ cuotasRoutes.post('/', (req: Request, res: Response) => {
         multas: body.multas,
         monto_total: suma_cuot,
         monto_con_desc: menos_desc,
-        fecha_lim_pag: body.fecha_lim_pag
+        fecha_lim_pag: fechaActual()
     });
-       console.log('Fecha limite de pago ', body.fecha_lim_pag)
-
+       
     cuota.save((err: any, cuotaGuardada) => {
         if (err){
             return res.status(500).json({
