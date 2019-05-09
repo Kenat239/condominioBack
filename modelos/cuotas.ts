@@ -18,7 +18,8 @@ export var cuotasSchema: Schema = new Schema({
     otros_cargos: { type: Number, required: false },
     int_moratorios: { type: Number, required: false },
     monto_total: { type: Number, required: false },
-    fch_lim_pag: { type: Date, required: false }
+    monto_con_desc: { type: Number, required: false },
+    fecha_lim_pag: { type: Date, required: false }
 
 }, {collection: 'cuotas' });
 

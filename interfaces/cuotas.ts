@@ -5,11 +5,12 @@ export interface CUotas{
     servicio_gas: number,
     servicio_agua: number,
     otros_servicios: number,
-    multas: number,
     otros_cargos: number,
+    multas: number,
     descuento: number,
     monto_total: number,
+    monto_con_desc: number,
     int_moratorios: number,
-    fch_lim_pag: Date
+    fecha_lim_pag: Date
     
 }
