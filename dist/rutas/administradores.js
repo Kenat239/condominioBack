@@ -7,6 +7,8 @@ var express_1 = require("express");
 var residentes_1 = require("../modelos/residentes");
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var authentication_1 = __importDefault(require("../middlewares/authentication"));
+var moment_1 = __importDefault(require("moment"));
+var globales_1 = require("../funciones/globales");
 var adminRoutes = express_1.Router();
 //========================================================================
 // nuevo residente
@@ -152,4 +154,6 @@ adminRoutes.delete('/:id', authentication_1.default, function (req, res) {
         });
     });
 });
+var date = moment_1.default(globales_1.fechaActual()).unix();
+console.log(date);
 exports.default = adminRoutes;
