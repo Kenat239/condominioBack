@@ -1,12 +1,12 @@
 {
-  "name": "berp",
+  "name": "condominios",
   "version": "1.0.0",
-  "description": "Backend con https y sockets para erp",
+  "description": "Backend de condominios",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Galeonne",
+  "author": "Kenat",
   "license": "MIT",
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
