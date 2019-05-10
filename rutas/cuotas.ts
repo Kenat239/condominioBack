@@ -12,6 +12,7 @@ const cuotasRoutes = Router();
 cuotasRoutes.post('/', (req: Request, res: Response) => {
     const body: CUotas = req.body;
 
+
     let suma_cuot: number = 
         Number( body.mantenimiento ) +
         Number( body.extraordinaria ) +
