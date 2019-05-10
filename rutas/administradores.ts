@@ -182,4 +182,7 @@ adminRoutes.delete('/:id',verificaToken, (req: Request, res: Response) => {
 
 let date = moment(fechaActual() ).unix();
 console.log(date)
+
+
+
 export default adminRoutes;
