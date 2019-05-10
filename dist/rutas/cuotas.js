@@ -70,4 +70,73 @@ cuotasRoutes.get('/', function (req, res) {
         });
     });
 });
+//=======================================
+//Modificar Cuotas
+//=======================================
+cuotasRoutes.put('/:id', function (req, res) {
+    var id = req.params.id;
+    var body = req.body;
+    cuotas_1.Cuotas.findById(id, function (err, cuotaActualizada) {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                mensaje: 'Error en la base de datos',
+                err: err
+            });
+        }
+        if (!cuotaActualizada) {
+            return res.status(404).json({
+                ok: false,
+                mensaje: 'Cuota no existe',
+                err: err,
+                cuota: cuotaActualizada
+            });
+        }
+        cuotaActualizada.mantenimiento = body.mantenimiento;
+        cuotaActualizada.extraordinaria = body.extraordinaria;
+        cuotaActualizada.area_comun = body.area_comun;
+        cuotaActualizada.descuento = body.descuento;
+        cuotaActualizada.servicio_gas = body.servicio_gas;
+        cuotaActualizada.servicio_agua = body.servicio_agua;
+        cuotaActualizada.otros_servicios = body.otros_servicios;
+        cuotaActualizada.otros_cargos = body.otros_cargos;
+        cuotaActualizada.int_moratorios = body.int_moratorios;
+        cuotaActualizada.multas = body.multas;
+        cuotaActualizada.fecha_lim_pag = body.fecha_lim_pag;
+        cuotaActualizada.save(function (err, cuotaGuardada) {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al actualizar',
+                    err: err
+                });
+            }
+            res.status(200).json({
+                ok: true,
+                mensaje: 'Cuota actualizada',
+                cuota: cuotaGuardada
+            });
+        });
+    });
+});
+//=======================================
+//Eliminar Cuota
+//=======================================
+cuotasRoutes.delete('/:id', function (req, res) {
+    var id = req.params.id;
+    cuotas_1.Cuotas.findByIdAndDelete(id, function (err, cuotaDel) {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                mensaje: 'No se puede eliminar la cuota',
+                err: err
+            });
+        }
+        res.status(200).json({
+            ok: true,
+            mensaje: 'Cuota eliminada',
+            cuotaDel: cuotaDel
+        });
+    });
+});
 exports.default = cuotasRoutes;
