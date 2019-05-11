@@ -2,16 +2,24 @@ import { Router, Request, Response, response } from 'express';
 import { Cuotas } from '../modelos/cuotas';
 import { CUotas } from '../interfaces/cuotas';
 import { fechaActual } from '../funciones/globales';
-import moment from 'moment';
+import verificaToken from '../middlewares/authentication';
 
 const cuotasRoutes = Router();
 
 //=======================================
 //Crear Cuotas
 //=======================================
-cuotasRoutes.post('/', (req: Request, res: Response) => {
-    const body: CUotas = req.body;
+cuotasRoutes.post('/', verificaToken , (req: Request, res: Response) => {
 
+    const body: CUotas = req.body;
+    const admin = req.body.usuario;
+
+    if(admin.rol !== 'ADMIN_ROL'){
+        return res.status(400).json({
+            ok: false,
+            mensaje: 'No eres administrador para crear cuotas'
+        });
+    } 
 
     let suma_cuot: number = 
         Number( body.mantenimiento ) +
@@ -73,17 +81,15 @@ cuotasRoutes.post('/', (req: Request, res: Response) => {
 cuotasRoutes.get('/', (req: Request, res: Response) => {
     Cuotas.find((err: any, cuotaDB) => {
 
-        if (err){
-            return res.status(500).json({
-                ok: false,
-                mensaje: 'Error en la base de datos',
-                err:err
-            });
-        }
-
-        
-    
-        res.status(200).json({
+            if (err){
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error en la base de datos',
+                    err:err
+                });
+            }
+                      
+         res.status(200).json({
             ok: true,
             cuota: cuotaDB,
             
@@ -94,9 +100,18 @@ cuotasRoutes.get('/', (req: Request, res: Response) => {
 //=======================================
 //Modificar Cuotas
 //=======================================
-cuotasRoutes.put('/:id', (req: Request, res: Response) => {
+cuotasRoutes.put('/:id', verificaToken, (req: Request, res: Response) => {
+
     const id = req.params.id;
     const body = req.body;
+    const admin = req.body.usuario;
+
+    if(admin.rol !== 'ADMIN_ROL') {
+        return res.status(400).json({
+            ok: false,
+            mensaje: 'No eres administrador para modificar cuotas'
+        });
+    }
 
     Cuotas.findById(id, (err, cuotaActualizada) => {
         if (err){
@@ -150,8 +165,16 @@ cuotasRoutes.put('/:id', (req: Request, res: Response) => {
 //=======================================
 //Eliminar Cuota
 //=======================================
-cuotasRoutes.delete('/:id', (req: Request, res: Response) => {
+cuotasRoutes.delete('/:id', verificaToken, (req: Request, res: Response) => {
     const id = req.params.id;
+    const admin = req.body.usuario;
+
+    if(admin.rol !== 'ADMIN_ROL'){
+        return res.status(400).json({
+            ok: false,
+            mensaje: 'No eres administrador para eliminar cuotas'
+        });
+    }
 
     Cuotas.findByIdAndDelete(id, (err, cuotaDel) => {
         if(err){

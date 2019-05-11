@@ -12,9 +12,8 @@ const adminRoutes = Router();
 //========================================================================
 // nuevo residente
 //========================================================================
-adminRoutes.post('/',verificaToken, (req:Request, res: Response) => {
+adminRoutes.post('/',verificaToken,(req:Request, res: Response) => {
     const body: IResidente = req.body;
-    
     
             const admin=req.body.usuario;
     
@@ -23,7 +22,8 @@ adminRoutes.post('/',verificaToken, (req:Request, res: Response) => {
                     ok: false,
                     mensaje: ' se requiere ser administrador para registrar nuevos usuarios',
                 })
-            }
+            }   
+
         const residente = new Residente ({
             nombre: body.nombre,
             apellidoP: body.apellidoP,

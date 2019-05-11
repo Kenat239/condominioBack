@@ -1,14 +1,25 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var cuotas_1 = require("../modelos/cuotas");
 var globales_1 = require("../funciones/globales");
+var authentication_1 = __importDefault(require("../middlewares/authentication"));
 var cuotasRoutes = express_1.Router();
 //=======================================
 //Crear Cuotas
 //=======================================
-cuotasRoutes.post('/', function (req, res) {
+cuotasRoutes.post('/', authentication_1.default, function (req, res) {
     var body = req.body;
+    var admin = req.body.usuario;
+    if (admin.rol !== 'ADMIN_ROL') {
+        return res.status(400).json({
+            ok: false,
+            mensaje: 'No eres administrador para crear cuotas'
+        });
+    }
     var suma_cuot = Number(body.mantenimiento) +
         Number(body.extraordinaria) +
         Number(body.area_comun) +
@@ -73,9 +84,16 @@ cuotasRoutes.get('/', function (req, res) {
 //=======================================
 //Modificar Cuotas
 //=======================================
-cuotasRoutes.put('/:id', function (req, res) {
+cuotasRoutes.put('/:id', authentication_1.default, function (req, res) {
     var id = req.params.id;
     var body = req.body;
+    var admin = req.body.usuario;
+    if (admin.rol !== 'ADMIN_ROL') {
+        return res.status(400).json({
+            ok: false,
+            mensaje: 'No eres administrador para modificar cuotas'
+        });
+    }
     cuotas_1.Cuotas.findById(id, function (err, cuotaActualizada) {
         if (err) {
             return res.status(500).json({
@@ -122,8 +140,15 @@ cuotasRoutes.put('/:id', function (req, res) {
 //=======================================
 //Eliminar Cuota
 //=======================================
-cuotasRoutes.delete('/:id', function (req, res) {
+cuotasRoutes.delete('/:id', authentication_1.default, function (req, res) {
     var id = req.params.id;
+    var admin = req.body.usuario;
+    if (admin.rol !== 'ADMIN_ROL') {
+        return res.status(400).json({
+            ok: false,
+            mensaje: 'No eres administrador para eliminar cuotas'
+        });
+    }
     cuotas_1.Cuotas.findByIdAndDelete(id, function (err, cuotaDel) {
         if (err) {
             return res.status(500).json({

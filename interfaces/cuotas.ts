@@ -11,7 +11,7 @@ export interface CUotas{
     monto_total: number,
     monto_con_desc: number,
     int_moratorios: number,
-    fecha_lim_pag: Date
+    fecha_lim_pag: number
     
     
 }

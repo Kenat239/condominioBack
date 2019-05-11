@@ -19,7 +19,7 @@ export var cuotasSchema: Schema = new Schema({
     int_moratorios: { type: Number, required: false },
     monto_total: { type: Number, required: false },
     monto_con_desc: { type: Number, required: false },
-    fecha_lim_pag: { type: Date, required: false }
+    fecha_lim_pag: { type: Number, required: false }
 
 }, {collection: 'cuotas' });
 
