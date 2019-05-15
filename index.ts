@@ -21,6 +21,7 @@ import uploadRoutes from './rutas/uploads';
 import serviciosRoutes from './rutas/servicios';
 import residentRoutes from './rutas/residentes';
 import adminRoutes from './rutas/administradores';
+import PagosRoutes from './rutas/pagos';
 
 // Rutas de servicios
 server.app.use('/login', loginRoutes);
@@ -28,6 +29,7 @@ server.app.use('/uploads', uploadRoutes);
 server.app.use('/servicios', serviciosRoutes);
 server.app.use('/residentes', residentRoutes);
 server.app.use('/admins', adminRoutes);
+server.app.use('/pago', PagosRoutes);
 
 // Conexion a base de datos
 mongoose.connect(`mongodb://${ DB_URL }`, {useCreateIndex: true, useNewUrlParser: true}, (err) => {

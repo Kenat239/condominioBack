@@ -9,11 +9,11 @@ const serviciosRoutes = Router();
 //=======================================
 //Crear Servicio
 //=======================================
-serviciosRoutes.post('/:id', verificaToken , (req: Request, res: Response) => {
+serviciosRoutes.post('/', verificaToken , (req: Request, res: Response) => {
 
     const body: SErvicios = req.body;
     const admin = req.body.usuario;
-    const residente = req.body.usuario;
+    const id = req.headers.id;
 
     if(admin.rol !== 'ADMIN_ROL'){
         return res.status(400).json({
@@ -29,6 +29,7 @@ serviciosRoutes.post('/:id', verificaToken , (req: Request, res: Response) => {
         nombre_serv: body.nombre_serv,
         costo: body.costo,
         dia_pago: fechaUnix,
+        creadoX: id
     });
 
     servicio.save((err: any, servicioGuardado) => {

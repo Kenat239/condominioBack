@@ -10,10 +10,10 @@ var serviciosRoutes = express_1.Router();
 //=======================================
 //Crear Servicio
 //=======================================
-serviciosRoutes.post('/:id', authentication_1.default, function (req, res) {
+serviciosRoutes.post('/', authentication_1.default, function (req, res) {
     var body = req.body;
     var admin = req.body.usuario;
-    var residente = req.body.usuario;
+    var id = req.headers.id;
     if (admin.rol !== 'ADMIN_ROL') {
         return res.status(400).json({
             ok: false,
@@ -25,6 +25,7 @@ serviciosRoutes.post('/:id', authentication_1.default, function (req, res) {
         nombre_serv: body.nombre_serv,
         costo: body.costo,
         dia_pago: fechaUnix,
+        creadoX: id
     });
     servicio.save(function (err, servicioGuardado) {
         if (err) {

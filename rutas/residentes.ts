@@ -3,11 +3,10 @@ import {Residente} from '../modelos/residentes';
 import { IResidente } from '../interfaces/residentes';
 import bcrypt  from 'bcrypt'
 import verificaToken from '../middlewares/authentication'
+import { Servicios } from '../modelos/servicios';
 
 
 const residentRoutes = Router();
-
-
 
 //========================================================================
 // actualizacion del residente como residente
@@ -65,8 +64,6 @@ residentRoutes.put('/:id', verificaToken, (req:Request, res:Response) => {
                 });
             });
         });
-   
-
 });
 //========================================================================
 // que el residente pueda leer solo sus datos
@@ -74,6 +71,7 @@ residentRoutes.put('/:id', verificaToken, (req:Request, res:Response) => {
 residentRoutes.get('/:id', verificaToken, (req: Request, res: Response) => {
     const REsid = req.body.usuario;
     const id = req.params.id
+
     console.log(REsid)
 
     if ( id !== REsid._id ) {
@@ -82,6 +80,16 @@ residentRoutes.get('/:id', verificaToken, (req: Request, res: Response) => {
             mensaje: 'no eres tú'
         });
     }
+
+    Servicios.find( (err:any, servicioDB) =>{
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                mensaje: 'Error en la base de datos',
+                err: err
+            });
+        }
+
 
     Residente.findById( id, (err:any, residenteDB) =>{
         if (err) {
@@ -94,9 +102,11 @@ residentRoutes.get('/:id', verificaToken, (req: Request, res: Response) => {
 
         res.status(200).json({
             ok: true,
-            reidente: residenteDB
+            reidente: residenteDB,
+            servicio: servicioDB
         });
     } );
+});
 
 });
 

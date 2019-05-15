@@ -7,6 +7,7 @@ var express_1 = require("express");
 var residentes_1 = require("../modelos/residentes");
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var authentication_1 = __importDefault(require("../middlewares/authentication"));
+var servicios_1 = require("../modelos/servicios");
 var residentRoutes = express_1.Router();
 //========================================================================
 // actualizacion del residente como residente
@@ -72,7 +73,7 @@ residentRoutes.get('/:id', authentication_1.default, function (req, res) {
             mensaje: 'no eres tú'
         });
     }
-    residentes_1.Residente.findById(id, function (err, residenteDB) {
+    servicios_1.Servicios.find(function (err, servicioDB) {
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -80,9 +81,19 @@ residentRoutes.get('/:id', authentication_1.default, function (req, res) {
                 err: err
             });
         }
-        res.status(200).json({
-            ok: true,
-            reidente: residenteDB
+        residentes_1.Residente.findById(id, function (err, residenteDB) {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error en la base de datos',
+                    err: err
+                });
+            }
+            res.status(200).json({
+                ok: true,
+                reidente: residenteDB,
+                servicio: servicioDB
+            });
         });
     });
 });
