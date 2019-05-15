@@ -18,14 +18,14 @@ server.app.use( cors( { origin: true, credentials: true }) );
 // Importar rutas
 import loginRoutes from './rutas/login';
 import uploadRoutes from './rutas/uploads';
-import cuotasRoutes from './rutas/cuotas';
+import serviciosRoutes from './rutas/servicios';
 import residentRoutes from './rutas/residentes';
 import adminRoutes from './rutas/administradores';
 
 // Rutas de servicios
 server.app.use('/login', loginRoutes);
 server.app.use('/uploads', uploadRoutes);
-server.app.use('/cuotas', cuotasRoutes);
+server.app.use('/servicios', serviciosRoutes);
 server.app.use('/residentes', residentRoutes);
 server.app.use('/admins', adminRoutes);
 

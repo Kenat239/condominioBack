@@ -33,6 +33,7 @@
         "mongoose-unique-validator": "^2.0.2",
         "nodemailer": "^6.1.1",
         "socket.io": "^2.2.0",
+        "unix": "0.0.0",
         "unix-timestamp": "^0.2.0"
     }
 }

@@ -24,7 +24,8 @@ export const residenteSchema: Schema = new Schema({
     email: { type: String, unique: true, required: [ true, ' EL correo es necesario']},
     password: { type: String, required: [ true, 'La contraseña es necesaria']},
     rol: { type: String, enum: rolesValidos, default: 'RES_ROL'},
-    status: { type: String, default: 'activo', required: true },
+    status: { type: String, default: 'activo', required: true }
+  
 },
 
 { collection: 'residente' }

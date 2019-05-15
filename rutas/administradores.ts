@@ -3,9 +3,9 @@ import {Residente} from '../modelos/residentes';
 import { IResidente } from '../interfaces/residentes';
 import bcrypt  from 'bcrypt'
 import verificaToken from '../middlewares/authentication'
-import moment, { unix } from 'moment'
-import { Timestamp } from 'bson';
-import {horaActual, fechaActual} from '../funciones/globales'
+
+
+
 const adminRoutes = Router();
 
 
@@ -35,7 +35,7 @@ adminRoutes.post('/',verificaToken,(req:Request, res: Response) => {
             email: body.email,
             password: bcrypt.hashSync(body.password,10),
             rol: body.rol,
-            status: body.status
+            status: body.status,
         });
     
         residente.save((err:any, residenteGuard)=> {
@@ -179,9 +179,5 @@ adminRoutes.delete('/:id',verificaToken, (req: Request, res: Response) => {
             });
         });
 });
-
-let date = moment(fechaActual() ).unix();
-console.log(date)
-
 
 export default adminRoutes;

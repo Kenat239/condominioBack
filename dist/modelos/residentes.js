@@ -20,7 +20,7 @@ exports.residenteSchema = new mongoose_1.Schema({
     email: { type: String, unique: true, required: [true, ' EL correo es necesario'] },
     password: { type: String, required: [true, 'La contraseña es necesaria'] },
     rol: { type: String, enum: rolesValidos, default: 'RES_ROL' },
-    status: { type: String, default: 'activo', required: true },
+    status: { type: String, default: 'activo', required: true }
 }, { collection: 'residente' });
 exports.residenteSchema.plugin(mongoose_unique_validator_1.default, { message: '{ PATH } debe ser unico ' });
 exports.Residente = mongoose_1.model("residente", exports.residenteSchema);

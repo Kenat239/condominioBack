@@ -1,7 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import fileUpload from 'express-fileupload';
-import fs, { existsSync } from 'fs';
-import { crearDirectorio } from '../funciones/globales';
+
 
 const uploadRoutes = Router();
 

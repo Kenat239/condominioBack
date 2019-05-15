@@ -1,5 +1,4 @@
-import { Log } from '../modelos/log';
-import fs from 'fs';
+
 
 function addZero( i: any ) {
     if ( i < 10 ) {
@@ -31,45 +30,4 @@ export function fechaActual() {
     return fecha;  
 }
 
-export function guardarLog(tipo: string, url: string, usuario: any, email: any, ip: any, descripcion: string) {
-    let promesa = new Promise( ( resolve, reject ) => {
-        let log = new Log({
-            tipo: tipo,
-            url: url,
-            usuario: usuario,
-            email: email,
-            ip: ip,
-            fecha: fechaActual(),
-            hora: horaActual(),
-            descripcion: descripcion
-        });
 
-        log.save((err: any, logGuardado) => {
-            if ( err ) {
-                throw err;
-                reject();
-            }
-
-            console.log('Log actualizado');
-        });
-
-        resolve();
-    });
-
-    return promesa;
-}
-
-export function crearDirectorio(ruta: string) {
-    let promise = new Promise((resolve, reject) => {
-        fs.mkdir(ruta, ( err:any ) => {
-            if ( err ) {
-                console.log(err);
-                reject(err);
-            }
-
-            resolve();
-        });
-    });
-
-    return promise;
-}

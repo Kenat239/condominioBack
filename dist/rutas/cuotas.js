@@ -4,14 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
-var cuotas_1 = require("../modelos/cuotas");
+var servicios_1 = require("../modelos/servicios");
 var globales_1 = require("../funciones/globales");
 var authentication_1 = __importDefault(require("../middlewares/authentication"));
 var cuotasRoutes = express_1.Router();
 //=======================================
 //Crear Cuotas
 //=======================================
-cuotasRoutes.post('/', authentication_1.default, function (req, res) {
+cuotasRoutes.post('/admins', authentication_1.default, function (req, res) {
     var body = req.body;
     var admin = req.body.usuario;
     if (admin.rol !== 'ADMIN_ROL') {
@@ -32,7 +32,7 @@ cuotasRoutes.post('/', authentication_1.default, function (req, res) {
     var menos_desc = Number(suma_cuot) -
         Number(body.descuento);
     var fechaUnix = parseInt((new Date(globales_1.fechaActual()).getTime() / 1000).toFixed(0));
-    var cuota = new cuotas_1.Cuotas({
+    var cuota = new servicios_1.Cuotas({
         mantenimiento: body.mantenimiento,
         extraordinaria: body.extraordinaria,
         area_comun: body.area_comun,
@@ -67,7 +67,7 @@ cuotasRoutes.post('/', authentication_1.default, function (req, res) {
 //Enlistar Cuotas
 //=======================================
 cuotasRoutes.get('/', function (req, res) {
-    cuotas_1.Cuotas.find(function (err, cuotaDB) {
+    servicios_1.Cuotas.find(function (err, cuotaDB) {
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -94,7 +94,7 @@ cuotasRoutes.put('/:id', authentication_1.default, function (req, res) {
             mensaje: 'No eres administrador para modificar cuotas'
         });
     }
-    cuotas_1.Cuotas.findById(id, function (err, cuotaActualizada) {
+    servicios_1.Cuotas.findById(id, function (err, cuotaActualizada) {
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -149,7 +149,7 @@ cuotasRoutes.delete('/:id', authentication_1.default, function (req, res) {
             mensaje: 'No eres administrador para eliminar cuotas'
         });
     }
-    cuotas_1.Cuotas.findByIdAndDelete(id, function (err, cuotaDel) {
+    servicios_1.Cuotas.findByIdAndDelete(id, function (err, cuotaDel) {
         if (err) {
             return res.status(500).json({
                 ok: false,

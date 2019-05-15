@@ -46,6 +46,7 @@ residentRoutes.put('/:id', verificaToken, (req:Request, res:Response) => {
             resActualizado.telefono = body.telefono
             resActualizado.celular = body.celular
             resActualizado.password = bcrypt.hashSync(body.password,10)
+    
 
             resActualizado.save((err:any, resGuardado:any) =>{
                 if (err) {
